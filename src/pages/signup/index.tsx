@@ -2,13 +2,16 @@ import { Inter } from 'next/font/google'
 import Header from '@/components/header'
 import BallInput from '@/components/widgets/ballInput'
 import { useEffect, useState } from 'react'
-
+import Axios from 'axios'
+import { send } from 'process'
 
 export default function Login() {
   const [emailAddress, setEmailAddress] = useState("")
   const [password, setPassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
+  const [emailAddressFlagState, setEmailAddressFlagState] = useState(0)
   const [confirmPasswordFlagState, setConfirmPasswordFlagState] = useState(0)
+
   useEffect(() => {
     if (confirmPassword !== "" && password !== confirmPassword) {
       setConfirmPasswordFlagState(2)
@@ -20,7 +23,38 @@ export default function Login() {
       setConfirmPasswordFlagState(0)
     }
   }, [password, confirmPassword])
+  useEffect(() => {
+    if(emailAddress!=="")
+      if (isEmailValid(emailAddress)) {
+        setEmailAddressFlagState(1)
+      } else {
+        setEmailAddressFlagState(2)
+      }
+    else setEmailAddressFlagState(0)
+  }, [emailAddress])
+  function isEmailValid(email:string) {
+    // Regex for checking email format
+    const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+    return regex.test(String(email).toLowerCase());
+  }
   var signUpWithEmail = () => {
+    if (emailAddress === "") {
+      setEmailAddressFlagState(2)
+    }
+    else if (emailAddressFlagState===1){
+      if(confirmPasswordFlagState===1){
+        let sendData = new FormData()
+        sendData.append('emailAddress',emailAddress)
+        sendData.append('password',password)
+        Axios.post("http://localhost:8000/api/users/",sendData)
+        .then(res=>{
+          alert("success")
+        })
+        .catch(err=>{
+          alert("error")
+        })
+      }
+    }
 
   }
   return (
@@ -38,6 +72,10 @@ export default function Login() {
                 <div className="sm:flex w-fit h-fit p-4 justify-start">
                   <div className=' w-48 h-12 flex items-center text-3xl text-white'>Email: </div>
                   <BallInput inputType='text' inputValue={emailAddress} setInputValue={setEmailAddress} />
+                  <div>
+                    {emailAddressFlagState !== 0 && <img src={emailAddressFlagState === 1 ? "./images/check-true.png" : "./images/check-false.png"}
+                      alt="check-image" width={40} height={40} className='absolute p-2 mx-5 animate-pulse' />}
+                  </div>
                 </div>
                 <div className="sm:flex w-fit h-fit p-4 justify-start">
                   <div className=' w-48 h-12 flex items-center text-3xl text-white'>Password: </div>

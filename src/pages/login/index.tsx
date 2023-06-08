@@ -2,14 +2,46 @@ import { Inter } from 'next/font/google'
 import Header from '@/components/header'
 import { useEffect, useState } from 'react'
 import BallInput from '@/components/widgets/ballInput'
-
+import Axios from 'axios'
 
 export default function Login() {
 
   const [emailAddress, setEmailAddress] = useState("")
   const [password, setPassword] = useState("")
-
+  const [emailAddressFlagState, setEmailAddressFlagState] = useState(0)
+  useEffect(() => {
+    if (emailAddress !== "")
+      if (isEmailValid(emailAddress)) {
+        setEmailAddressFlagState(1)
+      } else {
+        setEmailAddressFlagState(2)
+      }
+    else setEmailAddressFlagState(0)
+  }, [emailAddress])
+  function isEmailValid(email: string) {
+    // Regex for checking email format
+    const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+    return regex.test(String(email).toLowerCase());
+  }
   var signInWithEmail = () => {
+    if (emailAddress === "") {
+      setEmailAddressFlagState(2)
+    }
+    else if (emailAddressFlagState === 1) {
+      let sendData = new FormData()
+      sendData.append('emailAddress', emailAddress)
+      sendData.append('password', password)
+      
+    //   Axios.get("http://localhost:8000/api/users/", sendData)
+    //     .then(res => {
+    //       alert("success")
+    //     })
+    //     .catch(err => {
+    //       alert("error")
+    //     })
+
+    // }
+    }
   }
   return (
     <div>
