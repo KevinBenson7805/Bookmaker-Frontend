@@ -6,7 +6,7 @@ import Logo from "../logo";
 import MenuBar from "./menuBar";
 
 interface IheaderProps {
-  selectedPage:String
+  selectedPage:String,
 }
 
 const Header: React.FC<IheaderProps> = ({ selectedPage}) => {
