@@ -106,7 +106,7 @@ export default function Login() {
           <div className="absolute w-full h-[100vh] pt-64">
             <div className='w-fit h-full container mx-auto flex flex-col justify-between'>
               <div id="signInArea" className=' pt-0 sm:pt-28'>
-                <div className="sm:flex w-fit h-fit p-4 justify-start">
+                <div className="sm:flex w-fit h-fit p-4 justify-starts">
                   <div className=' w-48 h-12 flex items-center text-3xl text-white'>Email: </div>
 
                   <BallInput inputType='text' inputValue={emailAddress} setInputValue={setEmailAddress} validState={emailAddressFlagState} />

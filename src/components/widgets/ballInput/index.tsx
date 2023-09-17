@@ -9,7 +9,7 @@ interface IBallInputProps {
   validState:number
 }
 
-const BallInput: React.FC<IBallInputProps> = ({inputValue,setInputValue,inputType,validState }) => {
+const BallInput: React.FC<IBallInputProps> = ({ inputValue,setInputValue,inputType,validState }) => {
   var ballRef=useRef<HTMLImageElement>(null)
   const [inputBgColor,setInputBgColor] = useState("bg-transparent")
   useEffect(()=>{
@@ -70,16 +70,15 @@ const BallInput: React.FC<IBallInputProps> = ({inputValue,setInputValue,inputTyp
   }
   return (
     <div className="">
-      <div className="relative group w-96 h-12">
+      <div className="relative h-12 group w-96">
         <input type={inputType} style={{backgroundColor:inputBgColor}}
-        className="outline-none absolute w-96 h-12 px-12 rounded-full border-4 border-blue-300 text-xl bg-transparent
-         text-white transition duration-500  shadow-blue-400 shadow-lg"
+        className="absolute h-12 px-12 text-xl text-white transition duration-500 bg-transparent border-4 border-blue-300 rounded-full shadow-lg outline-none w-96 shadow-blue-400"
          value={inputValue} onChange={(evt)=>setInputValue(evt.target.value)}
          onBlur={()=>{onBlurHandle()}} onMouseDown={()=>{onClickHandle()}}>
         </input>
         
         <img src="./images/ball.png" alt="ball" width={48} height={48} ref={ballRef}
-        className="p-px ml-px absolute"/>
+        className="absolute p-px ml-px"/>
         
         
       </div>

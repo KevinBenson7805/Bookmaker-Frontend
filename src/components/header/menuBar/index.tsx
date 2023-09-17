@@ -30,9 +30,9 @@ const MenuBar: React.FC<ImenuBarProps> = ({ selectedPage }) => {
     loginState.then(res => {
       if (res !== null) {
         dispatch(setAccessTokenAsync(res))
-        setLoginFlag(true)
-        if(router.asPath==="/login"||router.asPath==="/signup")
-          router.replace("/")
+        setLoginFlag(false)
+        // if(router.asPath==="/login"||router.asPath==="/signup")
+        //   router.replace("/")
       }
       else {
         setLoginFlag(false)
